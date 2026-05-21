@@ -11,6 +11,16 @@ from utils.image import Image
 from utils.image_stack import ImageStack
 from utils.design import DesignAssistant
 
+"""
+Citation:
+- YAML is using a recommended cache clearing mthod from https://github.com/TheRealRyGuy/clear-cache-action
+Test Details: 
+- test workflow:
+    - users will run the test file each time they push code to the main branch
+    - set up github action ->install dependency -> clear cache if exists -> run tests.py
+- tests are performed with pytest, testing the three classes 
+- the function tests are loading, resizeing, updating information, and saving
+"""
 # test the image class
 class TestImage:
     @pytest.fixture
