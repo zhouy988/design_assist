@@ -35,10 +35,8 @@ on:
 jobs:
   test:
     runs-on: macos-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -53,4 +51,4 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest tests/tests.py
+          python -m pytest test/tests.py
