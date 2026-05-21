@@ -101,12 +101,11 @@ class TestDesignAssistant:
         assert da.image_stack is not None
         assert len(da.image_stack.get_images()) > 0
 
-    def test_find_coherence(self, da):
+    def test_find_coherence(self, da):        
         da.set_image_stack("../lib/test_images")
-        images = da.image_stack.get_images()
-        results = da.find_coherence(images)
+        results = da.find_coherence(da.image_stack.images)
         assert results is not None
-        assert len(results) == len(images)
+        assert len(results) == len(da.image_stack.images)
 
 if __name__ == "__main__":
     pytest.main()
