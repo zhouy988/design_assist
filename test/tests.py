@@ -1,5 +1,5 @@
 import pytest
-import cv2
+# import cv2
 import numpy as np
 import sys
 import os
@@ -7,14 +7,13 @@ import os
 CLASSES_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, CLASSES_FOLDER)
 
-from utils.utils_image import Image 
-from utils.utils_image import ImageStack
+from utils.image import Image 
+from utils.image_stack import ImageStack
+from utils.design import DesignAssistant
 
 # test the image class
 class TestImage:
-    
-    @pytest.fixture
-    def img(self):
+    def test_img(self):
         img = Image()
         return img
 
@@ -43,8 +42,7 @@ class TestImage:
         assert os.path.exists("../lib/outputs/img0_cropped.jpg"), "modified image saved"
 
 class TestImageStack:
-    @pytest.fixture
-    def img_stack(self):
+    def test_img_stack(self):
         img_stack = ImageStack()
         return img_stack
 
@@ -57,6 +55,55 @@ class TestImageStack:
         img_stack.resize_images()
         for img in img_stack.get_images():
             assert img.image.size == (256, 256), "resized image stack"
+
+class TestDesignAssistant:
+    def test_da(self):
+        da = DesignAssistant()
+        return da
+    
+    def test_initialization(self, da):
+        assert da.design is None
+        assert da.theme is None
+        assert da.product == {}
+        assert da.creative_level is None
+        assert da.image_stack is None
+
+    def test_reset(self, da):
+        da.design = "one design"
+        da.theme = "timeless"
+        da.product = {"product1": "purpose1"}
+        da.creative_level = "high"
+        da.image_stack = "test stack"
+        
+        da.reset()
+        
+        assert da.design is None
+        assert da.theme is None
+        assert da.product == {}
+        assert da.creative_level is None
+
+    def test_set_product(self, da):
+        da.set_product("shoes", "used for walking")
+        assert da.product == {"shoes": "used for walking"}
+        
+        da.set_product("shoes", "used for running") # should not update existing product
+        assert da.product == {"shoes": "used for walking"}
+
+    def test_set_creative_level(self, da):
+        da.set_creative_level("medium")
+        assert da.creative_level == "medium"
+
+    def test_set_image_stack(self, da):
+        da.set_image_stack("../lib/test_images")
+        assert da.image_stack is not None
+        assert len(da.image_stack.get_images()) > 0
+
+    def test_find_coherence(self, da):
+        da.set_image_stack("../lib/test_images")
+        images = da.image_stack.get_images()
+        results = da.find_coherence(images)
+        assert results is not None
+        assert len(results) == len(images)
 
 if __name__ == "__main__":
     pytest.main()
