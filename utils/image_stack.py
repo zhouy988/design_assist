@@ -4,6 +4,11 @@ from utils.image import Image
 class ImageStack:
     def __init__(self):
         self.images = []
+
+    def set_image_stack(self, img_folder):
+        self.clear_images()
+        self.create_image_stack(img_folder)
+        self.resize_images()
     
     def add_image(self, image):
         if image is not None:
@@ -26,12 +31,13 @@ class ImageStack:
             for filename in os.listdir(image_folder):
                 if filename.lower().endswith(valid_extensions):
                     image_path = os.path.join(image_folder, filename)
-                    img = Image(image_path)
+                    img = Image()
+                    img.load_image(image_path)
                     self.add_image(img)
         except Exception as e:
             print(f"something went wrong at {image_folder}: {e}")
 
     def resize_images(self):
         for image in self.images:
-            image.crop_image(0, 0, width=256, height=256)
+            image.crop_image(width=256, height=256)
             image.resize_image(target_rows=256, target_cols=256)

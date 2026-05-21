@@ -14,6 +14,7 @@ class DesignAssistant:
         self.theme = None
         self.product = {}
         self.creative_level = None
+        self.image_stack = None
 
     def set_product(self, product, purpose):
         if product not in self.product:
@@ -24,26 +25,19 @@ class DesignAssistant:
     def set_creative_level(self, level):
         self.creative_level = level
 
-    def find_coherence(self, images):
+    def find_coherence(self, src_images):
         # input a list of image objects and check for coherence
         results = []
-        for image in images:
-            try:
-                img = Image(image)
-                img.reset()
-                quality, coherence = img.quality_check(), img.check_coherence(image)
-                results.append((image, quality, coherence))
-                return results
-            except Exception as e:
-                print(f"invalid {image}: {e}")
-                return None
-            
+        img = Image()
+        # coherence features was removed, and quality check will be the only check
+        # try & catch block was removed with assumption of valid input
+        for image in src_images:
+            img.reset()
+            img.load_image(image.path)
+            quality = img.quality_check()
+            results.append(quality)
+        return results
+
     def set_image_stack(self, img_folder):
         self.image_stack = ImageStack()
-        self.image_stack.clear_images()
-        self.image_stack.create_image_stack(img_folder)
-        self.image_stack.resize_images()
-
-    def design_supplies(self, order):
-        # check the coherence of the design, and return supplies suggestions
-        inspiration_diversity = self.find_coherence()
+        self.image_stack.set_image_stack(img_folder)
