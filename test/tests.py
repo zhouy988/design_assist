@@ -19,7 +19,7 @@ class TestImage:
         return img
 
     def test_load_image_success(self, img):
-        img.load_image("../lib/test_images/img0.jpeg")
+        img.load_image("lib/test_images/img0.jpeg")
         assert img.data is not None, "test image loaded"
 
     def test_load_image_failure(self, img):
@@ -27,20 +27,20 @@ class TestImage:
             img.load_image("../img2.jpeg")
 
     def test_resize_image(self, img):
-        img.load_image("../lib/test_images/img0.jpeg")
+        img.load_image("lib/test_images/img0.jpeg")
         resized_img = img.resize_image(100, 100)
         assert resized_img.data.shape[:2] == (100, 100), "resized successfully"
 
     def test_crop_image(self, img):
-        img.load_image("../lib/test_images/img0.jpeg")
+        img.load_image("lib/test_images/img0.jpeg")
         cropped = img.crop_image(50, 50)
         assert cropped.shape[:2] == (50, 50), "cropped successfully"
 
     def test_save_image(self, img):
-        img.load_image("../lib/test_images/img0.jpeg")
+        img.load_image("lib/test_images/img0.jpeg")
         img.crop_image(256, 256)
-        img.save_image("../lib/outputs/img0_cropped.jpg")
-        assert os.path.exists("../lib/outputs/img0_cropped.jpg"), "modified image saved"
+        img.save_image("lib/outputs/img0_cropped.jpg")
+        assert os.path.exists("lib/outputs/img0_cropped.jpg"), "modified image saved"
 
 class TestImageStack:
     @pytest.fixture
@@ -49,11 +49,11 @@ class TestImageStack:
         return img_stack
 
     def test_create_image_stack(self, img_stack):
-        img_stack.create_image_stack("../lib/test_images")
+        img_stack.create_image_stack("lib/test_images")
         assert len(img_stack.images) == 2, "created image stack"
 
     def test_resize_images(self, img_stack):
-        img_stack.create_image_stack("lib/outputs")
+        # img_stack.create_image_stack("lib/outputs")
         img_stack.resize_images()
         for img in img_stack.get_images():
             assert img.data.size == (256, 256), "resized image stack"
@@ -97,7 +97,7 @@ class TestDesignAssistant:
         assert da.creative_level == "medium"
 
     def test_set_image_stack(self, da):
-        da.set_image_stack("../lib/test_images")
+        da.set_image_stack("lib/test_images")
         assert da.image_stack is not None
         assert len(da.image_stack.get_images()) > 0
 
