@@ -1,5 +1,5 @@
-from utils.utils_image import Image
-from utils.utils_image_stack import ImageStack
+from utils.image import Image
+from utils.image_stack import ImageStack
 
 class DesignAssistant:
     def __init__(self):

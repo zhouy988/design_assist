@@ -53,8 +53,8 @@ class Image:
     def save_image(self, output_path):
         cv2.imwrite(output_path, self.data)
 
-if __name__ == "__main__":
-    img = Image("../lib/test_images/img1.jpg")
-    img.load_image()
-    img.crop_image(100, 100)
-    img.save_image("../lib/outputs/img1_cropped.jpg")
+# if __name__ == "__main__":
+#     img = Image("../lib/test_images/img1.jpg")
+#     img.load_image()
+#     img.crop_image(100, 100)
+#     img.save_image("../lib/outputs/img1_cropped.jpg")

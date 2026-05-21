@@ -1,5 +1,5 @@
 import os
-from utils.utils_image import Image
+from utils.image import Image
 
 class ImageStack:
     def __init__(self):
