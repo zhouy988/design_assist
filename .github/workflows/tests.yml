@@ -1,6 +1,7 @@
 name: Run Tests
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
   pull_request:
@@ -24,7 +25,7 @@ jobs:
           pip install pytest
       - name: Delete Repository Cache
         uses: TheRealRyGuy/clear-cache-action@master
-        env:
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run tests
         run: |
