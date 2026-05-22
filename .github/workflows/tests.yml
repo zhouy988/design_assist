@@ -25,7 +25,7 @@ jobs:
           pip install pytest
       - name: Delete Repository Cache
         uses: TheRealRyGuy/clear-cache-action@master
-        with:
+        env:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Run tests
         run: |
